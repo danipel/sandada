@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  rag-service:
+    build: .
+    container_name: rag-nutricional
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./.env:/app/.env
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped

@@ -1,0 +1,146 @@
+# =====================================================
+# Python
+# =====================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# PyCharm
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# =====================================================
+# Environment Variables & Secrets
+# =====================================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.crt
+secrets/
+credentials.json
+
+# =====================================================
+# Docker
+# =====================================================
+docker-compose.override.yml
+.dockerignore
+
+# =====================================================
+# Operating System
+# =====================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# =====================================================
+# Logs
+# =====================================================
+*.log
+logs/
+*.log.*
+
+# =====================================================
+# Temporary Files
+# =====================================================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+
+# =====================================================
+# Go (para el Gateway futuro)
+# =====================================================
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# =====================================================
+# Database
+# =====================================================
+*.db
+*.sqlite
+*.sqlite3
+
+# =====================================================
+# Project Specific
+# =====================================================
+# Archivos de ingesta temporal
+RAG/rag-service/data/raw/
+RAG/rag-service/data/processed/
+
+# Modelos descargados
+RAG/rag-service/models/
+
+# Archivos de backup
+*.bak
+*.backup
