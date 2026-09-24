@@ -30,35 +30,38 @@ Sistema distribuido para recomendar y analizar alimentos en tiempo real mediante
 
 El sistema utiliza **Búsqueda Híbrida**: no todos los datos se vectorizan.
 
-1. **`productos` (Datos Duros):** Búsqueda por `barcode` (EAN) o filtros exactos (`azucar_g < 5`). No utiliza embeddings.
-2. **`conocimiento_nutricional` (RAG Semántico):** Guías médicas, intolerancias, artículos de salud e ingredientes nocivos. Almacenados con vectores de 768 dimensiones.
+1. **`products` (Hard Data):** Search by `barcode` (EAN) or exact filters (`sugar_total_g < 5`). No embeddings.
+2. **`knowledge_sources` + `knowledge_chunks` (Semantic RAG):** Medical guides, intolerances, health articles, harmful ingredients. Stored with 768-dimensional vectors (Gemini text-embedding-004).
 
-### Esquema Simplificado
+### Simplified Schema
 
 ```sql
--- Extensión vectorial obligatoria
+-- Required vector extension
 CREATE EXTENSION IF NOT EXISTS vector;
 
--- Tabla de Conocimiento (RAG)
-CREATE TABLE conocimiento_nutricional (
+-- Knowledge Sources (Documents)
+CREATE TABLE knowledge_sources (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    titulo TEXT NOT NULL,
-    contenido TEXT NOT NULL,
-    categoria TEXT, -- "Diabetes", "Keto", "Aditivos", etc.
-    embedding VECTOR(768),
+    title VARCHAR NOT NULL,
+    source_url TEXT,
+    type VARCHAR, -- "article", "guide", "study"
+    category VARCHAR(100), -- "Diabetes", "Keto", "Additives"
+    metadata JSONB DEFAULT '{}'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Tabla de Productos
-CREATE TABLE productos (
+-- Knowledge Chunks (RAG Vectorized Chunks)
+CREATE TABLE knowledge_chunks (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    barcode VARCHAR(13) UNIQUE NOT NULL,
-    nombre TEXT NOT NULL,
-    marca TEXT,
-    ingredientes TEXT,
-    tabla_nutricional JSONB,
+    source_id UUID REFERENCES knowledge_sources(id),
+    chunk_text TEXT NOT NULL,
+    embedding VECTOR(768), -- Gemini embeddings
+    metadata JSONB DEFAULT '{}'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Products (Existing table in DB)
+-- Barcode-based lookup, structured nutritional data
 ```
 ## 4. Flujo de Trabajo del RAG (Pipeline)
 
