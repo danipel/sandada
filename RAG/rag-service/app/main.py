@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from app.core.config import settings
 from app.core.logger import logger
-from app.api.routes import health
+from app.api.routes import health, rag
 
 app = FastAPI(
     title=settings.project_name,
@@ -14,6 +14,12 @@ app.include_router(
     health.router,
     prefix=settings.api_v1_prefix,
     tags=["health"]
+)
+
+app.include_router(
+    rag.router,
+    prefix=settings.api_v1_prefix,
+    tags=["rag"]
 )
 
 
